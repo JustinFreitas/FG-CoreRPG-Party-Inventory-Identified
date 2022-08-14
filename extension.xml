@@ -3,13 +3,13 @@
 <root version="3.1">
 	<properties>
 		<name>Feature: Party Item Identified</name>
-		<version>1.4</version>
+		<version>1.6</version>
 		<author>Llisandur</author>
 		<description>Adds identify buttons to party sheet and parcels</description>
 		<loadorder>200</loadorder>
 	</properties>
 	
-	<announcement text="Party Item Identified v1.4 FGC/FGU, 8/20/21\rBy Llisandur, updated by bmos" font="emotefont" icon="magnify_icon" />
+	<announcement text="Party Item Identified v1.6 FGC/FGU, 8/14/22\rBy Llisandur, updated by bmos" font="emotefont" icon="magnify_icon" />
 	
 	<base>
 		<!-- Party sheet -->
@@ -17,6 +17,9 @@
 
 		<!-- Campaign records -->
 		<includefile source="campaign/record_parcel.xml" />
+
+		<!-- Templates -->
+		<includefile source="common/template_records.xml" />
 
 		<!-- Scripts -->
 		<script name="PartyInventoryIDOptions" file="scripts/pii-options.lua" />
