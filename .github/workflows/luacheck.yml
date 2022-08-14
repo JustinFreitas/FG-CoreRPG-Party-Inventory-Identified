@@ -32,34 +32,34 @@ jobs:
         uses: ashley-taylor/regex-property-action@1.2
         with:
           value: ${{ steps.getnamefromxml.outputs.info }}
-          regex: '.*:\s'
+          regex: '[A-Za-z]+:\s+'
           replacement: ''
 
-      - id: shortenextname
+      - id: removeapostrophes
         uses: ashley-taylor/regex-property-action@1.2
         with:
           value: ${{ steps.removenameprefix.outputs.value }}
-          regex: ',.*'
-          replacement: ''
-
-      - id: removenameparenthetical
-        uses: ashley-taylor/regex-property-action@1.2
-        with:
-          value: ${{ steps.shortenextname.outputs.value }}
-          regex: '\(.*\)'
+          regex: "'"
           replacement: ''
 
       - id: removenamepunctuation
         uses: ashley-taylor/regex-property-action@1.2
         with:
-          value: ${{ steps.removenameparenthetical.outputs.value }}
-          regex: '[^A-Za-z0-9]+'
+          value: ${{ steps.removeapostrophes.outputs.value }}
+          regex: '[^\w\s].*'
+          replacement: ''
+
+      - id: removenamespaces
+        uses: ashley-taylor/regex-property-action@1.2
+        with:
+          value: ${{ steps.removenamepunctuation.outputs.value }}
+          regex: '\s'
           replacement: ''
 
       - id: namelowercase
         uses: ASzc/change-string-case-action@v2
         with:
-          string: ${{ steps.removenamepunctuation.outputs.value }}
+          string: ${{ steps.removenamespaces.outputs.value }}
 
       # Determine extension author
 
@@ -75,34 +75,34 @@ jobs:
         uses: ashley-taylor/regex-property-action@1.2
         with:
           value: ${{ steps.getauthorfromxml.outputs.info }}
-          regex: '.*:\s'
+          regex: '[A-Za-z]+:\s'
           replacement: ''
 
-      - id: shortenauthorname
+      - id: removeauthorapostrophes
         uses: ashley-taylor/regex-property-action@1.2
         with:
           value: ${{ steps.removeauthorprefix.outputs.value }}
-          regex: ',.*'
-          replacement: ''
-
-      - id: removeauthorparenthetical
-        uses: ashley-taylor/regex-property-action@1.2
-        with:
-          value: ${{ steps.shortenauthorname.outputs.value }}
-          regex: '\(.*\)'
+          regex: "'"
           replacement: ''
 
       - id: removeauthorpunctuation
         uses: ashley-taylor/regex-property-action@1.2
         with:
-          value: ${{ steps.removeauthorparenthetical.outputs.value }}
-          regex: '[^A-Za-z0-9]+'
+          value: ${{ steps.removeauthorapostrophes.outputs.value }}
+          regex: '[^\w\s].*'
+          replacement: ''
+
+      - id: removeauthorspaces
+        uses: ashley-taylor/regex-property-action@1.2
+        with:
+          value: ${{ steps.removeauthorpunctuation.outputs.value }}
+          regex: '\s'
           replacement: ''
 
       - id: authorlowercase
         uses: ASzc/change-string-case-action@v2
         with:
-          string: ${{ steps.removeauthorpunctuation.outputs.value }}
+          string: ${{ steps.removeauthorspaces.outputs.value }}
 
     outputs:
       extension: ${{ steps.namelowercase.outputs.lowercase }}
